@@ -10,7 +10,7 @@
 
 # **Team Members**
 
-- T
+- Thomas Le ([kablamIO](https://github.com/kablamIO))
 - Wonjun Kang ([wj-kang](https://github.com/wj-kang))
 - S
 -
