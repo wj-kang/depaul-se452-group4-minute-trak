@@ -12,5 +12,5 @@
 
 - Thomas Le ([kablamIO](https://github.com/kablamIO))
 - Wonjun Kang ([wj-kang](https://github.com/wj-kang))
-- S
+- Sornthorn Anujavanit ([Sornthornsc2](https://github.com/Sornthornsc2))
 -
