@@ -13,4 +13,4 @@
 - Thomas Le ([kablamIO](https://github.com/kablamIO))
 - Wonjun Kang ([wj-kang](https://github.com/wj-kang))
 - Sornthorn Anujavanit ([Sornthornsc2](https://github.com/Sornthornsc2))
--
+- Sardar Khan ([SardarK942](https://github.com/SardarK942))
