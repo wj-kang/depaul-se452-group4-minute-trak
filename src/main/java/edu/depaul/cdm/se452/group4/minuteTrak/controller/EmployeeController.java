@@ -29,8 +29,8 @@ public class EmployeeController {
     try {
       EmployeeEntity employee = EmployeeEntity.builder()//
           .email(employeeDTO.getEmail())//
-          .firstname(employeeDTO.getFirstname())//
-          .lastname(employeeDTO.getLastname())//
+          .firstName(employeeDTO.getFirstName())//
+          .lastName(employeeDTO.getLastName())//
           .build();
 
       EmployeeEntity registeredEmployee = employeeService.create(employee);
@@ -38,8 +38,8 @@ public class EmployeeController {
 
       EmployeeDTO responseEmployeeDTO = EmployeeDTO.builder()//
           .email(registeredEmployee.getEmail())//
-          .firstname(registeredEmployee.getFirstname())//
-          .lastname(registeredEmployee.getLastname())//
+          .firstName(registeredEmployee.getFirstName())//
+          .lastName(registeredEmployee.getLastName())//
           .build();
 
       return ResponseEntity.ok().body(responseEmployeeDTO);

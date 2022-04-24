@@ -5,7 +5,7 @@ import edu.depaul.cdm.se452.group4.minuteTrak.model.EmployeeEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 @Repository
-public interface EmployeeRepository extends JpaRepository<EmployeeEntity, String> {
+public interface EmployeeRepository extends JpaRepository<EmployeeEntity, Long> {
 
   EmployeeEntity findByEmail(String email);
 
