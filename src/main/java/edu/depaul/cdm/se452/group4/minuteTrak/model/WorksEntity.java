@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -55,7 +56,7 @@ public class WorksEntity {
   private LocalDateTime date;
 
   // /* Works(1) -> Employees(*) */
-  @OneToMany // (fetch = FetchType.EAGER)
+  @OneToMany (fetch = FetchType.EAGER)
   @JoinTable(name = "Works", joinColumns = { @joinColumn(name = "p_id", referencedColumnName = "e_id")})
   @ToString.Exclude
   private List<EmployeeEntity> employees;
