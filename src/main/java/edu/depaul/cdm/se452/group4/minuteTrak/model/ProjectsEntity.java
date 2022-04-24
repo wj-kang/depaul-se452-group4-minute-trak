@@ -31,7 +31,6 @@ public class ProjectsEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "p_id")
   private long pId;
-  // need to do a join between works and projects
 
   @Column(nullable = false)
   private String name;
@@ -39,6 +38,7 @@ public class ProjectsEntity {
   @Column(nullable = false)
   private int budget;
 
-
+  @OneToMany(mappedBy = "project")
+  private List<WorksEntity> works;
 
 }

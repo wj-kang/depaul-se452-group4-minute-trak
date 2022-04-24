@@ -23,7 +23,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "TimeOffRequests")
-public class TimeOffRequestEntity {
+public class TimeOffRequestsEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,11 +46,11 @@ public class TimeOffRequestEntity {
 
   /* Employee(1) -> TimeOffRequests(*) */
   @ManyToOne
-  @JoinColumn(name = "e_id", nullable = false)
+  @JoinColumn(name = "e_id")
   private EmployeeEntity employee;
 
-  // RELATIONSHIP
   // TimeOffRequest(1) -> ApprovedTimeOffs(*)
   @OneToMany(mappedBy = "timeOffRequest")
   private List<ApprovedTimeOffEntity> approvedTimeOffs;
+
 }

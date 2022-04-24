@@ -30,6 +30,9 @@ public class AdminEntity {
   private long adminId;
 
   @Column(nullable = false)
+  private String account;
+
+  @Column(nullable = false)
   private String password;
 
   @OneToMany(mappedBy = "managedByAdminId")

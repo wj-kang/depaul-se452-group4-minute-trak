@@ -25,22 +25,24 @@ public class ApprovedTimeOffEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "e_id")
-    private long eId;
+    @Column(name = "time_off_id")
+    private int timeOffId;
 
     @Column(name = "date", nullable = false)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDateTime date;
 
-    @Column(name = "is_paid")
+    @Column(name = "is_paid", nullable = false)
     private boolean isPaid;
 
-    // RELATIONSHIP
-    // TimeOffRequest(1) -> ApprovedTimeOffs(*)
-    /* Employee(*) -> Salary(1) */
+    // approvedTimeOffs(*) -> timeOffRequest(1)
     @ManyToOne
     @JoinColumn(name = "req_id")
-    private TimeOffRequestEntity timeOffRequest;
-    // imesheet
-    t
+    private TimeOffRequestsEntity timeOffRequest;
+
+    // approvedTimeOffs(*) -> timesheet(1)
+    @ManyToOne
+    @JoinColumn(name = "t_id")
+    private TimesheetsEntity timesheet;
+
 }

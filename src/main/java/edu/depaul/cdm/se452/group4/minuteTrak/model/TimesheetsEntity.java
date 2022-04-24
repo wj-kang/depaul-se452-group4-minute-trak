@@ -11,7 +11,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 import org.springframework.format.annotation.DateTimeFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,6 +24,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Table(name = "Timesheets")
 public class TimesheetsEntity {
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "t_id")
@@ -44,18 +44,18 @@ public class TimesheetsEntity {
   @Column(name = "is_approved")
   private String isApproved;
 
-  // timeoffs(*) -> timesheet(1)
-  // @OneToMany(mappedBy="timesheet")
-  // private List<ApprovedTimeOffsEntity> approvedTimeOffs;
+  // timesheet(1) -> approvedTimeOffs(*)
+  @OneToMany(mappedBy = "timesheet")
+  private List<ApprovedTimeOffEntity> approvedTimeOffs;
 
-  // works(*) -> timehsheet(1)
-  // @OneToMany(mappedBy="timesheet")
-  // private List<WorksEntity> works;
+  // timehsheet(1) -> works(*)
+  @OneToMany(mappedBy = "timesheet")
+  private List<WorksEntity> works;
 
-  // employee(1) -> timesheet(*)
-  // @ManyToOne
-  // @JoinColumn(name = "e_id", referencedColumnName = "id")
-  // private EmployeeEntity employee;
+  // timesheet(*) -> employee(1)
+  @ManyToOne
+  @JoinColumn(name = "e_id")
+  private EmployeeEntity employee;
 
 }
 
