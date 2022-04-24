@@ -29,7 +29,7 @@ public class SalaryEntity {
   @Column(nullable = false)
   private int hourly;
 
-  /* Employee(*) -> Salary(1) */
+  /* Salary(1) -> Employee(*) */
   @OneToMany(mappedBy = "salary")
   private List<EmployeeEntity> employees;
 

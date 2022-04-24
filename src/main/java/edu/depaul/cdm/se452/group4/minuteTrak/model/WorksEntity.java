@@ -1,13 +1,15 @@
 package edu.depaul.cdm.se452.group4.minuteTrak.model;
 
-import java.util.List;
+import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import org.springframework.format.annotation.DateTimeFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,38 +23,32 @@ import lombok.NoArgsConstructor;
 @Table(name = "Works")
 public class WorksEntity {
 
-  /*
-   * For this table. Primary key => e_id + p_id + date
-   * 
-   */
-
-
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "p_id")
-  private long pId;
-
-  @Column(name = "e_id")
-  private long eId;
-
-  @Column(name = "t_id")
-  private long tId;
-
-
-  @Column(nullable = false)
-  private int hours;
+  @Column(name = "w_id")
+  private long wId;
 
   @Column(nullable = false)
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
   private LocalDateTime date;
 
-  // /* Works(1) -> Employees(*) */
-  // @OneToMany(mappedBy = "project")
-  // private List<ProjectsEntity> projects;
+  @Column(nullable = false)
+  private int hours;
 
-  // /* Employee(1) -> Works(*) */
-  // @OneToMany(mappedBy = "employee")
-  // private List<EmployeeEntity> projects;
+  // /* Works(*) -> Employees(1)*/
+  @ManyToOne
+  @JoinColumn(name = "e_id")
+  private EmployeeEntity employee;
+
+  // /* Works(*) -> Project(1) */
+  @ManyToOne
+  @JoinColumn(name = "p_id")
+  private ProjectsEntity project;
+
+  // /* Works(*) -> timesheet(1) */
+  @ManyToOne
+  @JoinColumn(name = "t_id")
+  private TimesheetsEntity timesheet;
 
 }
 

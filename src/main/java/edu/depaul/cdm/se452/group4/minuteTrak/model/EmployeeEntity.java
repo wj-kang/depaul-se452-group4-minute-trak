@@ -52,7 +52,7 @@ public class EmployeeEntity {
   private LocalDateTime dob;
 
   @Column(name = "create_time", nullable = false)
-  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) // UPDATE TO RIGHT FORMAT LATER
+  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
   private LocalDateTime createTime;
 
   @Column(name = "is_approved")
@@ -73,7 +73,15 @@ public class EmployeeEntity {
 
   /* Employee(1) -> TimeOffRequest(*) */
   @OneToMany(mappedBy = "employee")
-  private List<TimeOffRequestEntity> timeOffRequests;
+  private List<TimeOffRequestsEntity> timeOffRequests;
+
+  /* Employee(1) -> Timesheets(*) */
+  @OneToMany(mappedBy = "employee")
+  private List<TimesheetsEntity> timesheets;
+
+  /* Employee(1) -> Work(*) */
+  @OneToMany(mappedBy = "employee")
+  private List<WorksEntity> works;
 
 }
 
