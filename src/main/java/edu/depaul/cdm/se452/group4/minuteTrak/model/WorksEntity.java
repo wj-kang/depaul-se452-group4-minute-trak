@@ -1,17 +1,26 @@
 package edu.depaul.cdm.se452.group4.minuteTrak.model;
 
+import java.time.LocalDateTime;
 import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
 import javax.persistence.Table;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @Entity
@@ -30,13 +39,13 @@ public class WorksEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "p_id")
-  private long pId;
+  private long pID;
 
   @Column(name = "e_id")
-  private long eId;
+  private long eID;
 
   @Column(name = "t_id")
-  private long tId;
+  private long tID;
 
 
   @Column(nullable = false)
@@ -47,8 +56,10 @@ public class WorksEntity {
   private LocalDateTime date;
 
   // /* Works(1) -> Employees(*) */
-  // @OneToMany(mappedBy = "project")
-  // private List<ProjectsEntity> projects;
+  @OneToMany (fetch = FetchType.EAGER)
+  @JoinTable(name = "Works", joinColumns = { @joinColumn(name = "p_id", referencedColumnName = "e_id")})
+  @ToString.Exclude
+  private List<EmployeeEntity> employees;
 
   // /* Employee(1) -> Works(*) */
   // @OneToMany(mappedBy = "employee")
