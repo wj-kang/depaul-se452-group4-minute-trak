@@ -1,5 +1,6 @@
 package edu.depaul.cdm.se452.group4.minuteTrak.model;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +9,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -30,13 +34,13 @@ public class WorksEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "p_id")
-  private long pId;
+  private long pID;
 
   @Column(name = "e_id")
-  private long eId;
+  private long eID;
 
   @Column(name = "t_id")
-  private long tId;
+  private long tID;
 
 
   @Column(nullable = false)
