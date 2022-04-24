@@ -23,24 +23,30 @@ import lombok.NoArgsConstructor;
 @Table(name = "ApprovedTimeOff")
 public class ApprovedTimeOffEntity {
 
+    // @Column(name = "req_id")
+    // private long reqId;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "e_id")
-    private long eId;
-
     @Column(name = "date", nullable = false)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDateTime date;
+
+    // @Column(name = "t_id")
+    // private long tId;
 
     @Column(name = "is_paid")
     private boolean isPaid;
 
     // RELATIONSHIP
-    // TimeOffRequest(1) -> ApprovedTimeOffs(*)
-    /* Employee(*) -> Salary(1) */
+    // TimeOffRequest(*) -> ApprovedTimeOffs(1)
     @ManyToOne
     @JoinColumn(name = "req_id")
-    private TimeOffRequestEntity timeOffRequest;
-    // imesheet
-    t
+    private long reqId;
+
+    // TimeSheet(*) -> ApprovedTimeOffs(1)
+    @ManyToOne
+    @JoinColumn(name = "t_id")
+    private long tId;
+    
 }
