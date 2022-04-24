@@ -1,5 +1,6 @@
 DROP TABLE IF EXISTS Salaries;
 DROP TABLE IF EXISTS Projects;
+DROP TABLE IF EXISTS Employees_Projects;
 
 CREATE SEQUENCE hibernate_sequence START WITH 100 INCREMENT BY 1;
 
@@ -17,5 +18,11 @@ CREATE TABLE Projects (
     PRIMARY KEY (project_id)
 );
 
+CREATE TABLE Employees_Projects (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    project_name VARCHAR(50),
+    project_id VARCHAR(10),
+    PRIMARY KEY (project_id)
+);
 
 
