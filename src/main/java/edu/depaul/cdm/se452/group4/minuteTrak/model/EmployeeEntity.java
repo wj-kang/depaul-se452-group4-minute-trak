@@ -73,15 +73,15 @@ public class EmployeeEntity {
 
   /* Employee(1) -> TimeOffRequest(*) */
   @OneToMany(mappedBy = "employee")
-  private List<TimeOffRequestsEntity> timeOffRequests;
+  private List<TimeOffRequestEntity> timeOffRequests;
 
   /* Employee(1) -> Timesheets(*) */
   @OneToMany(mappedBy = "employee")
-  private List<TimesheetsEntity> timesheets;
+  private List<TimesheetEntity> timesheets;
 
   /* Employee(1) -> Work(*) */
   @OneToMany(mappedBy = "employee")
-  private List<WorksEntity> works;
+  private List<WorkEntity> works;
 
 }
 

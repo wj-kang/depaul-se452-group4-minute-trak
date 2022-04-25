@@ -38,11 +38,11 @@ public class ApprovedTimeOffEntity {
     // approvedTimeOffs(*) -> timeOffRequest(1)
     @ManyToOne
     @JoinColumn(name = "req_id")
-    private TimeOffRequestsEntity timeOffRequest;
+    private TimeOffRequestEntity timeOffRequest;
 
     // approvedTimeOffs(*) -> timesheet(1)
     @ManyToOne
     @JoinColumn(name = "t_id")
-    private TimesheetsEntity timesheet;
+    private TimesheetEntity timesheet;
 
 }
