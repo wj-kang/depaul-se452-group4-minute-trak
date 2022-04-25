@@ -31,3 +31,36 @@ INSERT INTO admins(account, password, e_id) VALUES ('admin01', 'password', 1);
 
 INSERT INTO Projects()
 
+
+
+INSERT INTO ApprovedTimeOff(time_off_id, date, is_paid, req_id, t_id) VALUES(
+    1, '2022-01-01', true, 1, 1
+);
+INSERT INTO ApprovedTimeOff(time_off_id, date, is_paid, req_id, t_id) VALUES(
+    2, '2022-02-02', true, 2, 2
+);
+INSERT INTO ApprovedTimeOff(time_off_id, date, is_paid, req_id, t_id) VALUES(
+    3, '2022-03-03', true, 3, 3
+);
+INSERT INTO ApprovedTimeOff(time_off_id, date, is_paid, req_id, t_id) VALUES(
+    4, '2022-04-04', true, 4, 4
+);
+INSERT INTO ApprovedTimeOff(time_off_id, date, is_paid, req_id, t_id) VALUES(
+    5, '2022-05-05', true, 5, 5
+);
+
+INSERT INTO TimeOffRequests(req_id, from_date, to_date, is_paid, is_approved, e_id) VALUES(
+    1, '2022-01-01', '2022-02-02', flase, true, 1 
+);
+INSERT INTO TimeOffRequests(req_id, from_date, to_date, is_paid, is_approved, e_id) VALUES(
+    2, '2022-03-03', '2022-04-04', flase, true, 2 
+);
+INSERT INTO TimeOffRequests(req_id, from_date, to_date, is_paid, is_approved, e_id) VALUES(
+    3, '2022-05-05', '2022-06-06', flase, true, 3
+);
+INSERT INTO TimeOffRequests(req_id, from_date, to_date, is_paid, is_approved, e_id) VALUES(
+    4, '2022-07-07', '2022-08-08', flase, true, 4
+);
+INSERT INTO TimeOffRequests(req_id, from_date, to_date, is_paid, is_approved, e_id) VALUES(
+    5, '2022-09-09', '2022-10-10', flase, true, 5
+);
