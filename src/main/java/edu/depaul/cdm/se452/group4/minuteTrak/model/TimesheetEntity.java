@@ -22,35 +22,40 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "TimeOffRequests")
-public class TimeOffRequestsEntity {
+@Table(name = "Timesheets")
+public class TimesheetEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "req_id")
-  private long reqId;
+  @Column(name = "t_id")
+  private long tId;
 
-  @Column(name = "from_date", nullable = false)
+  @Column(name = "start_date", nullable = false)
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-  private LocalDateTime fromDate;
+  private LocalDateTime startDate;
 
-  @Column(name = "to_date", nullable = false)
+  @Column(name = "end_date", nullable = false)
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-  private LocalDateTime toDate;
+  private LocalDateTime endDate;
 
-  @Column(name = "is_paid", nullable = false)
-  private boolean isPaid;
+  @Column(name = "is_submitted")
+  private String isSubmitted;
 
   @Column(name = "is_approved")
-  private boolean isApproved;
+  private String isApproved;
 
-  /* Employee(1) -> TimeOffRequests(*) */
+  // timesheet(1) -> approvedTimeOffs(*)
+  @OneToMany(mappedBy = "timesheet")
+  private List<ApprovedTimeOffEntity> approvedTimeOffs;
+
+  // timehsheet(1) -> works(*)
+  @OneToMany(mappedBy = "timesheet")
+  private List<WorkEntity> works;
+
+  // timesheet(*) -> employee(1)
   @ManyToOne
   @JoinColumn(name = "e_id")
   private EmployeeEntity employee;
 
-  // TimeOffRequest(1) -> ApprovedTimeOffs(*)
-  @OneToMany(mappedBy = "timeOffRequest")
-  private List<ApprovedTimeOffEntity> approvedTimeOffs;
-
 }
+

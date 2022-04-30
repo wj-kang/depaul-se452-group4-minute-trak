@@ -25,7 +25,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "Projects")
-public class ProjectsEntity {
+public class ProjectEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,6 +39,6 @@ public class ProjectsEntity {
   private int budget;
 
   @OneToMany(mappedBy = "project")
-  private List<WorksEntity> works;
+  private List<WorkEntity> works;
 
 }
