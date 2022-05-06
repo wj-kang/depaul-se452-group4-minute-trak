@@ -15,22 +15,19 @@ INSERT INTO Employees(e_id, email, password, first_name, last_name, dob, address
     1, 'user1@depaul.edu', 'password', 'john', 'doe', '1988-04-01', 'address sample', true, '2022-04-01 23:55:55', 1
 );
 INSERT INTO Employees(e_id, email, password, first_name, last_name, dob, address, is_approved, create_time, salary_level) VALUES (
-    2, 'user2@depaul.edu', 'password', 'john', 'doe', '1990-05-01', 'address sample', true, '2022-04-01 23:55:55', 2
+    2, 'user2@depaul.edu', 'password', 'steve', 'smith', '1990-05-01', 'address sample', true, '2022-04-01 23:55:55', 2
 );
 INSERT INTO Employees(e_id, password, first_name, last_name, dob, address, is_approved, create_time, salary_level) VALUES (
-    3, 'user3@depaul.edu', 'password', 'john', 'doe', '1992-04-01', 'address sample', true, '2022-04-01 23:55:55', 3
+    3, 'user3@depaul.edu', 'password', 'sally', 'sherman', '1992-04-01', 'address sample', true, '2022-04-01 23:55:55', 3
 );
 INSERT INTO Employees(e_id, email, password, first_name, last_name, dob, address, is_approved, create_time, salary_level) VALUES (
-    4, 'user4@depaul.edu', 'password', 'john', 'doe', '1994-04-01', 'address sample', true, '2022-04-01 23:55:55', 4
+    4, 'user4@depaul.edu', 'password', 'javon', 'freeman', '1994-04-01', 'address sample', true, '2022-04-01 23:55:55', 4
 );
 INSERT INTO Employees(e_id, email, password, first_name, last_name, dob, address, is_approved, create_time, salary_level) VALUES (
-    5, 'user5@depaul.edu', 'password', 'john', 'doe', '2000-04-01', 'address sample', true, '2022-04-01 23:55:55', 5
+    5, 'user5@depaul.edu', 'password', 'max', 'strus', '2000-04-01', 'address sample', true, '2022-04-01 23:55:55', 5
 );
 
 INSERT INTO admins(account, password, e_id) VALUES ('admin01', 'password', 1);
-
-INSERT INTO Projects()
-
 
 
 INSERT INTO ApprovedTimeOff(time_off_id, date, is_paid, req_id, t_id) VALUES(
@@ -50,19 +47,19 @@ INSERT INTO ApprovedTimeOff(time_off_id, date, is_paid, req_id, t_id) VALUES(
 );
 
 INSERT INTO TimeOffRequests(req_id, from_date, to_date, is_paid, is_approved, e_id) VALUES(
-    1, '2022-01-01', '2022-02-02', flase, true, 1 
+    1, '2022-01-01', '2022-02-02', true, true, 1 
 );
 INSERT INTO TimeOffRequests(req_id, from_date, to_date, is_paid, is_approved, e_id) VALUES(
-    2, '2022-03-03', '2022-04-04', flase, true, 2 
+    2, '2022-03-03', '2022-04-04', true, true, 2 
 );
 INSERT INTO TimeOffRequests(req_id, from_date, to_date, is_paid, is_approved, e_id) VALUES(
-    3, '2022-05-05', '2022-06-06', flase, true, 3
+    3, '2022-05-05', '2022-06-06', false, true, 3
 );
 INSERT INTO TimeOffRequests(req_id, from_date, to_date, is_paid, is_approved, e_id) VALUES(
-    4, '2022-07-07', '2022-08-08', flase, true, 4
+    4, '2022-07-07', '2022-08-08', true, true, 4
 );
 INSERT INTO TimeOffRequests(req_id, from_date, to_date, is_paid, is_approved, e_id) VALUES(
-    5, '2022-09-09', '2022-10-10', flase, true, 5
+    5, '2022-09-09', '2022-10-10', false, true, 5
 );
 
 INSERT INTO Projects(p_id, name, budget) VALUES (
