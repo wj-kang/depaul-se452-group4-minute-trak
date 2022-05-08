@@ -1,6 +1,7 @@
 package edu.depaul.cdm.se452.group4.minuteTrak.model;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -49,14 +51,20 @@ public class EmployeeEntity {
 
   @Column(nullable = false)
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-  private LocalDateTime dob;
+  private LocalDate dob;
 
-  @Column(name = "create_time", nullable = false)
-  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-  private LocalDateTime createTime;
+  @Column(nullable = false)
+  private String phone;
+
+  @Column(name = "created_time")
+  @CreationTimestamp
+  private Date createdTime;
 
   @Column(name = "is_approved")
-  private String isApproved;
+  private boolean isApproved;
+
+  @Column(name = "is_rejected")
+  private boolean isRejected;
 
   @Column(name = "pto_bank")
   private int ptoBank;
