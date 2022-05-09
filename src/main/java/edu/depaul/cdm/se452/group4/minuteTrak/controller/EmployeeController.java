@@ -2,10 +2,12 @@ package edu.depaul.cdm.se452.group4.minuteTrak.controller;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +31,44 @@ public class EmployeeController {
   public EmployeeController(EmployeeService employeeService) {
     this.employeeService = employeeService;
   }
+
+  @GetMapping("/guest")
+  public ResponseEntity<?> guestUser() {
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    try {
+      EmployeeEntity guest = EmployeeEntity.builder()//
+          .email(UUID.randomUUID().toString().substring(0, 12) + "@minutetrak.guest")//
+          .password(UUID.randomUUID().toString())//
+          .firstName("John")//
+          .lastName("Doe")//
+          .dob(LocalDate.parse("2000-01-01", formatter))//
+          .phone("312-123-1234")//
+          .address("1 E Jackson Blvd")//
+          .isApproved(true)//
+          .isRejected(false)//
+          .build();
+
+      EmployeeEntity registeredGuest = employeeService.create(guest);
+      log.info("\n -> New guest registered. {}", registeredGuest.getEmail());
+
+      /* TODO - Create a new token with eId & role */
+      // temporary fake token => payload: {"eId": "1", "role": "employee"} /// secret => "secretkey"
+      String token =
+          "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJtaW51dGV0cmFrIiwiZUlkIjoiMSIsInJvbGUiOiJlbXBsb3llZSJ9.7Rz6wO232sguCBHB-GlihKludrqja2OvXRXhPADOa6br3lWEw57PV3HyRsp3I03nZomWcFGdmnAYXD6eZfdGuw";
+
+      EmployeeDTO responseEmployeeDTO = EmployeeDTO.builder().email(registeredGuest.getEmail())
+          .firstName(registeredGuest.getFirstName()).lastName(registeredGuest.getLastName())
+          .token(token).build();
+      return ResponseEntity.ok().body(responseEmployeeDTO);
+
+    } catch (Exception e) {
+      ResponseDTO<String> responseDTO = ResponseDTO.<String>builder().error(e.getMessage()).build();
+      return ResponseEntity.badRequest().body(responseDTO);
+    }
+
+
+  }
+
 
   @PostMapping("/login")
   public ResponseEntity<?> authenticate(@RequestBody EmployeeDTO employeeDTO) {
