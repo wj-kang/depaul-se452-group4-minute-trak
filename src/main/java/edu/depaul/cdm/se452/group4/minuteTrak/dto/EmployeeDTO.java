@@ -11,16 +11,22 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class EmployeeDTO {
 
-  private String id;
-
   private String email;
 
-  private String firstname;
+  private String id;
 
-  private String lastname;
+  private String password;
 
-  // private String password;
+  private String firstName;
 
-  // private String token;
+  private String lastName;
+
+  private String phone;
+
+  private String dob;
+
+  private String address;
+
+  private String token;
 
 }
