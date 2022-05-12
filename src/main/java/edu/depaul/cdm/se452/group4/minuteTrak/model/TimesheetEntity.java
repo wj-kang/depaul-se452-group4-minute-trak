@@ -44,6 +44,9 @@ public class TimesheetEntity {
   @Column(name = "is_approved")
   private String isApproved;
 
+  @Column(name = "is_rejected")
+  private String isRejected;
+
   // timesheet(1) -> approvedTimeOffs(*)
   @OneToMany(mappedBy = "timesheet")
   private List<ApprovedTimeOffEntity> approvedTimeOffs;
