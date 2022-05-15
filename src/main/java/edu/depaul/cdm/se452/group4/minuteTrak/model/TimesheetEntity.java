@@ -45,7 +45,7 @@ public class TimesheetEntity {
   private String isApproved;
 
   @Column(name = "is_rejected")
-  private String isRejected;
+  private boolean isRejected;
 
   // timesheet(1) -> approvedTimeOffs(*)
   @OneToMany(mappedBy = "timesheet")
