@@ -39,10 +39,10 @@ public class TimesheetEntity {
   private LocalDateTime endDate;
 
   @Column(name = "is_submitted")
-  private String isSubmitted;
+  private boolean isSubmitted;
 
   @Column(name = "is_approved")
-  private String isApproved;
+  private boolean isApproved;
 
   @Column(name = "is_rejected")
   private boolean isRejected;
