@@ -59,9 +59,11 @@ public List<TimeOffRequestEntity> getAllTimeOffRequests(){
       List<TimeOffRequestEntity> requests = new ArrayList<>(); 
 
       try{
+       requests = adminService.getAllTimeOffRequests(); 
 
       }
       catch(Exception ex){
+        ex.printStackTrace();
 
       }
 
@@ -75,9 +77,11 @@ public List<TimeSheetEntity> getAllTimeSheets(){
       List<TimeSheetEntity> sheets = new ArrayList<>(); 
 
       try{
+        sheets = adminService.getAllTimeSheets();
 
       }
       catch(Exception ex){
+        ex.printStackTrace();
 
       }
 
@@ -86,13 +90,14 @@ public List<TimeSheetEntity> getAllTimeSheets(){
 
 @GetMapping(value = "/getAllEmployees", produces = "application/json")
 @ResponseBody
-public List<EmployeeEntity> getAllTimeOffRequests(){
+public List<EmployeeEntity> getAllEmployess(){
       List<EmployeeEntity> empList = new ArrayList<>(); 
 
       try{
-
+          empList = adminService.getAllEmployees();
       }
       catch(Exception ex){
+        ex.printStackTrace();
 
       }
 
@@ -101,19 +106,20 @@ public List<EmployeeEntity> getAllTimeOffRequests(){
 
 @GetMapping(value = "/getEmployeeData", produces = "application/json")
 @ResponseBody
-public List<EmployeeEntity> getEmployeeData(
+public EmployeeEntity getEmployeeData(
         @RequestParam(value = "employeeSelected") String employeeSelected
 ){
-      List<EmployeeEntity> empList = new ArrayList<>(); 
+      EmployeeEntity emp; 
 
       try{
-
+          emp = adminService.getEmployeeData(employeeSelected); 
       }
       catch(Exception ex){
+        ex.printStackTrace();
 
       }
 
-    return empList; 
+    return emp; 
 }
 
 @PostMapping(value = "/createEmployee", produces = "application/json", consumes = "application/json")
@@ -125,10 +131,13 @@ public String createEmployee(@RequestBody EmployeeDTO employeeDTO, HttpServletRe
       if(session != null){
         dlUserId = (String) session.getAttribute("eId");
         employeeDTO.setId(dlUserId);
+        return adminService.createEmployee(employeeDTO);
       }
+
 
     }
     catch(Exception exception){
+      exception.printStackTrace();
 
     }
 
@@ -147,8 +156,11 @@ public String updateTimeRequest(@RequestBody TimeOffRequestEntity timeOffRequest
       timeOffRequestEntity.setReqId(dlUserId);
     }
 
+    return adminService.updateTimeRequest(timeOffRequestEntity); 
+  
   }
   catch(Exception exception){
+    exception.printStackTrace();
 
   }
 
@@ -171,6 +183,7 @@ public String updateTimeSheet(@RequestBody TimesheetEntity timesheetEntity, Http
 
   }
   catch(Exception exception){
+    exception.printStackTrace();
 
   }
 
@@ -191,6 +204,7 @@ public String updateEmployeeInfo(@RequestBody EmployeeEntity employeeEntity, Htt
 
   }
   catch(Exception exception){
+    exception.printStackTrace();
 
   }
 
@@ -202,10 +216,10 @@ public String updateEmployeeInfo(@RequestBody EmployeeEntity employeeEntity, Htt
 @ResponseBody
 public String deleteEmployee(@RequestParam(value = "employeeID") String employeeID) {
   try{
-
+      return adminService.deleteEmployee(employeeID);
   }
-  catch{
-
+  catch(Exception exception){
+      exception.printStackTrace();
   }
 
   return null; 
