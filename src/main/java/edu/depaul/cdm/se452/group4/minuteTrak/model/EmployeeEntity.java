@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -80,15 +81,15 @@ public class EmployeeEntity {
   private AdminEntity managedByAdminId;
 
   /* Employee(1) -> TimeOffRequest(*) */
-  @OneToMany(mappedBy = "employee")
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee")
   private List<TimeOffRequestEntity> timeOffRequests;
 
   /* Employee(1) -> Timesheets(*) */
-  @OneToMany(mappedBy = "employee")
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee")
   private List<TimesheetEntity> timesheets;
 
   /* Employee(1) -> Work(*) */
-  @OneToMany(mappedBy = "employee")
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee")
   private List<WorkEntity> works;
 
 }

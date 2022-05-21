@@ -3,6 +3,7 @@ package edu.depaul.cdm.se452.group4.minuteTrak.model;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,7 +31,7 @@ public class SalaryEntity {
   private int hourly;
 
   /* Salary(1) -> Employee(*) */
-  @OneToMany(mappedBy = "salary")
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "salary")
   private List<EmployeeEntity> employees;
 
 }

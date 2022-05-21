@@ -1,9 +1,10 @@
 package edu.depaul.cdm.se452.group4.minuteTrak.model;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -32,11 +33,11 @@ public class TimesheetEntity {
 
   @Column(name = "start_date", nullable = false)
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-  private LocalDateTime startDate;
+  private LocalDate startDate;
 
   @Column(name = "end_date", nullable = false)
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-  private LocalDateTime endDate;
+  private LocalDate endDate;
 
   @Column(name = "is_submitted")
   private boolean isSubmitted;
@@ -47,16 +48,12 @@ public class TimesheetEntity {
   @Column(name = "is_rejected")
   private boolean isRejected;
 
-  // timesheet(1) -> approvedTimeOffs(*)
-  @OneToMany(mappedBy = "timesheet")
-  private List<ApprovedTimeOffEntity> approvedTimeOffs;
-
   // timehsheet(1) -> works(*)
-  @OneToMany(mappedBy = "timesheet")
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "timesheet")
   private List<WorkEntity> works;
 
   // timesheet(*) -> employee(1)
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "e_id")
   private EmployeeEntity employee;
 
