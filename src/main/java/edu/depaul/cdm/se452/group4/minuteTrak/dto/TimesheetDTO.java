@@ -13,20 +13,21 @@ import lombok.NoArgsConstructor;
 
 public class TimesheetDTO {
 
-    private String tID;
+    private long tId;
 
     private String startDate;
-  
+
     private String endDate;
-  
+
     private boolean isSubmitted;
-  
+
     private boolean isApproved;
-  
+
     private boolean isRejected;
-  
+
     private List<WorksDTO> works;
 
     @Builder.Default
     private Map<String, Integer> pto = new HashMap<>();
+
 }
