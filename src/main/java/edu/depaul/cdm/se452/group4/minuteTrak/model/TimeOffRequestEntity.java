@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "TimeOffRequests")
+@Table(name = "time_off_requests")
 public class TimeOffRequestEntity {
 
   @Id
