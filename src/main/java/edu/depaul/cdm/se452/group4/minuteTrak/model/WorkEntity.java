@@ -35,11 +35,6 @@ public class WorkEntity {
   @Column(nullable = false)
   private int hours;
 
-  // /* Works(*) -> Employees(1)*/
-  @ManyToOne
-  @JoinColumn(name = "e_id")
-  private EmployeeEntity employee;
-
   // /* Works(*) -> Project(1) */
   @ManyToOne
   @JoinColumn(name = "p_id")
