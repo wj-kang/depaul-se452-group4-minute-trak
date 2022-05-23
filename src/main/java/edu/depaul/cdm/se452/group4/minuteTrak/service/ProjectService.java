@@ -1,10 +1,8 @@
 package edu.depaul.cdm.se452.group4.minuteTrak.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import edu.depaul.cdm.se452.group4.minuteTrak.dto.ProjectDTO;
 import edu.depaul.cdm.se452.group4.minuteTrak.model.ProjectEntity;
 import edu.depaul.cdm.se452.group4.minuteTrak.persistence.ProjectRepository;
 import lombok.extern.slf4j.Slf4j;
