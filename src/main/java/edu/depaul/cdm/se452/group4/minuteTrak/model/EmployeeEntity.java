@@ -88,10 +88,6 @@ public class EmployeeEntity {
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee")
   private List<TimesheetEntity> timesheets;
 
-  /* Employee(1) -> Work(*) */
-  @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee")
-  private List<WorkEntity> works;
-
 }
 
 
