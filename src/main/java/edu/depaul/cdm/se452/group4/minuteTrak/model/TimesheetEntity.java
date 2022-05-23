@@ -1,5 +1,6 @@
 package edu.depaul.cdm.se452.group4.minuteTrak.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 import javax.persistence.Column;
@@ -17,6 +18,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @Entity
@@ -24,7 +26,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "Timesheets")
-public class TimesheetEntity {
+public class TimesheetEntity implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -55,6 +57,7 @@ public class TimesheetEntity {
   // timesheet(*) -> employee(1)
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "e_id")
+  @ToString.Exclude
   private EmployeeEntity employee;
 
 }
