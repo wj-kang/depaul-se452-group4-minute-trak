@@ -40,9 +40,4 @@ public class ApprovedTimeOffEntity {
     @JoinColumn(name = "req_id")
     private TimeOffRequestEntity timeOffRequest;
 
-    // approvedTimeOffs(*) -> timesheet(1)
-    @ManyToOne
-    @JoinColumn(name = "t_id")
-    private TimesheetEntity timesheet;
-
 }

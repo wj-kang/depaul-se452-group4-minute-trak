@@ -1,23 +1,20 @@
 package edu.depaul.cdm.se452.group4.minuteTrak.model;
 
-import java.time.LocalDateTime;
+import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
-import org.springframework.format.annotation.DateTimeFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+import lombok.ToString;
 
 @Data
 @Entity
@@ -25,7 +22,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "Projects")
-public class ProjectEntity {
+public class ProjectEntity implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,7 +35,8 @@ public class ProjectEntity {
   @Column(nullable = false)
   private int budget;
 
-  @OneToMany(mappedBy = "project")
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "project")
+  @ToString.Exclude
   private List<WorkEntity> works;
 
 }

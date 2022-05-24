@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import edu.depaul.cdm.se452.group4.minuteTrak.dto.ResponseDTO;
 import edu.depaul.cdm.se452.group4.minuteTrak.dto.EmployeeDTO;
 import edu.depaul.cdm.se452.group4.minuteTrak.model.EmployeeEntity;
+import edu.depaul.cdm.se452.group4.minuteTrak.security.TokenProvider;
 import edu.depaul.cdm.se452.group4.minuteTrak.service.EmployeeService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,11 +26,14 @@ public class EmployeeController {
 
   private EmployeeService employeeService;
 
+  private TokenProvider tokenProvider;
+
   private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
   @Autowired
-  public EmployeeController(EmployeeService employeeService) {
+  public EmployeeController(EmployeeService employeeService, TokenProvider tokenProvider) {
     this.employeeService = employeeService;
+    this.tokenProvider = tokenProvider;
   }
 
   @GetMapping("/guest")
@@ -51,10 +55,8 @@ public class EmployeeController {
       EmployeeEntity registeredGuest = employeeService.create(guest);
       log.info("\n -> New guest registered. {}", registeredGuest.getEmail());
 
-      /* TODO - Create a new token with eId & role */
-      // temporary fake token => payload: {"eId": "1", "role": "employee"} /// secret => "secretkey"
-      String token =
-          "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJtaW51dGV0cmFrIiwiZUlkIjoiMSIsInJvbGUiOiJlbXBsb3llZSJ9.7Rz6wO232sguCBHB-GlihKludrqja2OvXRXhPADOa6br3lWEw57PV3HyRsp3I03nZomWcFGdmnAYXD6eZfdGuw";
+      /* Create a JWT token including id & role */
+      String token = tokenProvider.createEmployeeToken(registeredGuest);
 
       EmployeeDTO responseEmployeeDTO = EmployeeDTO.builder().email(registeredGuest.getEmail())
           .firstName(registeredGuest.getFirstName()).lastName(registeredGuest.getLastName())
@@ -81,10 +83,8 @@ public class EmployeeController {
     }
 
     if (employee.isApproved()) {
-      /* TODO - Create a new token with eId & role */
-      // temporary fake token => payload: {"eId": "1", "role": "employee"} /// secret => "secretkey"
-      String token =
-          "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJtaW51dGV0cmFrIiwiZUlkIjoiMSIsInJvbGUiOiJlbXBsb3llZSJ9.7Rz6wO232sguCBHB-GlihKludrqja2OvXRXhPADOa6br3lWEw57PV3HyRsp3I03nZomWcFGdmnAYXD6eZfdGuw";
+      /* Create a JWT token including id & role */
+      String token = tokenProvider.createEmployeeToken(employee);
 
       EmployeeDTO responseEmployeeDTO = EmployeeDTO.builder().email(employee.getEmail())
           .firstName(employee.getFirstName()).lastName(employee.getLastName()).token(token).build();
@@ -107,14 +107,13 @@ public class EmployeeController {
 
   @PostMapping("/signup")
   public ResponseEntity<?> registerUser(@RequestBody EmployeeDTO employeeDTO) {
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     try {
       EmployeeEntity employee = EmployeeEntity.builder()//
           .email(employeeDTO.getEmail())//
           .password(passwordEncoder.encode(employeeDTO.getPassword()))//
           .firstName(employeeDTO.getFirstName())//
           .lastName(employeeDTO.getLastName())//
-          .dob(LocalDate.parse(employeeDTO.getDob(), formatter))//
+          .dob(employeeDTO.getDob())//
           .phone(employeeDTO.getPhone())//
           .address(employeeDTO.getAddress())//
           .isApproved(false)//
