@@ -1,5 +1,6 @@
 package edu.depaul.cdm.se452.group4.minuteTrak.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
@@ -20,6 +21,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 
 @Data
@@ -28,7 +30,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "Employees", uniqueConstraints = {@UniqueConstraint(columnNames = {"email"})})
-public class EmployeeEntity {
+public class EmployeeEntity implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -78,14 +80,17 @@ public class EmployeeEntity {
   /* Employee(*) -> Admin(1) */
   @ManyToOne
   @JoinColumn(name = "managed_by_admin_id", referencedColumnName = "admin_id")
+  @ToString.Exclude
   private AdminEntity managedByAdminId;
 
   /* Employee(1) -> TimeOffRequest(*) */
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee")
+  @ToString.Exclude
   private List<TimeOffRequestEntity> timeOffRequests;
 
   /* Employee(1) -> Timesheets(*) */
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee")
+  @ToString.Exclude
   private List<TimesheetEntity> timesheets;
 
 }

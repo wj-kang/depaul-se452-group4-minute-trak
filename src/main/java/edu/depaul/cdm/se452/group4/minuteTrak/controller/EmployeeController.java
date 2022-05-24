@@ -107,14 +107,13 @@ public class EmployeeController {
 
   @PostMapping("/signup")
   public ResponseEntity<?> registerUser(@RequestBody EmployeeDTO employeeDTO) {
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     try {
       EmployeeEntity employee = EmployeeEntity.builder()//
           .email(employeeDTO.getEmail())//
           .password(passwordEncoder.encode(employeeDTO.getPassword()))//
           .firstName(employeeDTO.getFirstName())//
           .lastName(employeeDTO.getLastName())//
-          .dob(LocalDate.parse(employeeDTO.getDob(), formatter))//
+          .dob(employeeDTO.getDob())//
           .phone(employeeDTO.getPhone())//
           .address(employeeDTO.getAddress())//
           .isApproved(false)//

@@ -14,10 +14,11 @@ import lombok.NoArgsConstructor;
 
 public class WorksDTO {
 
-    private int pId;
+    private long pId;
 
     private String projectName;
-  
+
     @Builder.Default
     private Map<String, Integer> hours = new HashMap<>();
+
 }
