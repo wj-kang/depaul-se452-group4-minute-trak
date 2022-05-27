@@ -8,6 +8,8 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +27,7 @@ import edu.depaul.cdm.se452.group4.minuteTrak.model.AdminEntity;
 import edu.depaul.cdm.se452.group4.minuteTrak.model.EmployeeEntity;
 import edu.depaul.cdm.se452.group4.minuteTrak.model.TimeOffRequestEntity;
 import edu.depaul.cdm.se452.group4.minuteTrak.model.TimesheetEntity;
+import edu.depaul.cdm.se452.group4.minuteTrak.security.TokenProvider;
 import edu.depaul.cdm.se452.group4.minuteTrak.service.AdminService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -36,8 +39,51 @@ import org.springframework.web.bind.annotation.PathVariable;
 @RequestMapping("/admin")
 public class AdminController {
 
-  @Autowired
   private AdminService adminService;
+
+  private TokenProvider tokenProvider;
+  
+  private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+  @Autowired
+  public AdminController(AdminService adminService, TokenProvider tokenProvider){
+    this.adminService = adminService; 
+    this.tokenProvider = tokenProvider; 
+  }
+
+  @PostMapping("/login")
+  public ResponseEntity<?> authenticate(@RequestBody AdminDTO adminDTO) {
+    AdminEntity admin = adminService.getByCredentials(adminDTO.getEmail(), 
+    adminDTO.getPassword(), passwordEncoder);
+    
+    if(admin == null) {
+      ResponseDTO<String> responseDTO = ResponseDTO.<String>builder().error("Login Failed").build();
+      return ResponseEntity.badRequest().body(responseDTO);
+    }
+
+    if (admin.isApproved()) {
+      /* Create a JWT token including id & role */
+      String token = tokenProvider.createAdminToken(admin);
+
+      AdminDTO responseAdminDTO = AdminDTO.builder().email(admin.getEmail())
+          .firstName(admin.getFirstName()).lastName(admin.getLastName()).token(token).build();
+      return ResponseEntity.ok().body(responseAdminDTO);
+    }
+
+    //rejected
+    if(admin.isRejected()){
+      ResponseDTO<String> responseDTO = 
+        ResponseDTO.<String>builder().error("Your login request has been rejected").build();
+        return ResponseEntity.badRequest().body(responseDTO);
+    }
+
+      // pending case
+      ResponseDTO<String> responseDTO =
+      ResponseDTO.<String>builder().error("Your sign-up request is pending review").build();
+  return ResponseEntity.badRequest().body(responseDTO);
+
+}
+ 
 
 // - getAllTimeOffRequests (needing approval) 
 // - getAllTimeSheets (needing approval)
@@ -77,7 +123,7 @@ public List<TimeSheetEntity> getAllTimeSheets(){
       List<TimeSheetEntity> sheets = new ArrayList<>(); 
 
       try{
-        sheets = adminService.getAllTimeSheets();
+        sheets = adminService.getAllxTimeSheets();
 
       }
       catch(Exception ex){
