@@ -1,5 +1,6 @@
 package edu.depaul.cdm.se452.group4.minuteTrak.model;
 
+import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -12,6 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,12 +26,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "Admins")
-public class AdminEntity {
+public class AdminEntity implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "admin_id")
   private long adminId;
+
+  @Column(nullable = false)
+  private String email;
 
   @Column(nullable = false)
   private String account;

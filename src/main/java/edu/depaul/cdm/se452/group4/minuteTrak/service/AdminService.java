@@ -117,7 +117,7 @@ catch(Exception ex){
 }
 }
 
-public String deleteEmployee(Long employeeID){
+public String deleteEmployee(long employeeID){
   try{
     employeeRepository.deleteById(employeeID);;
   return "Success";

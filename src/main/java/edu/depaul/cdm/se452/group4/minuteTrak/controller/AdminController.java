@@ -61,26 +61,13 @@ public class AdminController {
       return ResponseEntity.badRequest().body(responseDTO);
     }
 
-    if (admin.isApproved()) {
+
       /* Create a JWT token including id & role */
       String token = tokenProvider.createAdminToken(admin);
 
-      AdminDTO responseAdminDTO = AdminDTO.builder().email(admin.getEmail())
-          .firstName(admin.getFirstName()).lastName(admin.getLastName()).token(token).build();
+      AdminDTO responseAdminDTO = AdminDTO.builder().account(admin.getAccount())
+          .adminId(admin.getAdminId()).token(token).build();
       return ResponseEntity.ok().body(responseAdminDTO);
-    }
-
-    //rejected
-    if(admin.isRejected()){
-      ResponseDTO<String> responseDTO = 
-        ResponseDTO.<String>builder().error("Your login request has been rejected").build();
-        return ResponseEntity.badRequest().body(responseDTO);
-    }
-
-      // pending case
-      ResponseDTO<String> responseDTO =
-      ResponseDTO.<String>builder().error("Your sign-up request is pending review").build();
-  return ResponseEntity.badRequest().body(responseDTO);
 
 }
  
@@ -123,7 +110,7 @@ public List<TimeSheetEntity> getAllTimeSheets(){
       List<TimeSheetEntity> sheets = new ArrayList<>(); 
 
       try{
-        sheets = adminService.getAllxTimeSheets();
+        sheets = adminService.getAllTimeSheets();
 
       }
       catch(Exception ex){
@@ -141,7 +128,7 @@ public List<EmployeeEntity> getAllEmployess(){
 
       try{
           empList = adminService.getAllEmployees();
-      }
+      } 
       catch(Exception ex){
         ex.printStackTrace();
 
@@ -155,7 +142,7 @@ public List<EmployeeEntity> getAllEmployess(){
 public EmployeeEntity getEmployeeData(
         @RequestParam(value = "employeeSelected") String employeeSelected
 ){
-      EmployeeEntity emp; 
+      EmployeeEntity emp = null; 
 
       try{
           emp = adminService.getEmployeeData(employeeSelected); 
@@ -168,27 +155,27 @@ public EmployeeEntity getEmployeeData(
     return emp; 
 }
 
-@PostMapping(value = "/createEmployee", produces = "application/json", consumes = "application/json")
-@ResponseBody
-public String createEmployee(@RequestBody EmployeeDTO employeeDTO, HttpServletRequest request) {  
-    try {
-      HttpSession session = request.getSession(false); 
-      String dlUserId = null; 
-      if(session != null){
-        dlUserId = (String) session.getAttribute("eId");
-        employeeDTO.setId(dlUserId);
-        return adminService.createEmployee(employeeDTO);
-      }
+// @PostMapping(value = "/createEmployee", produces = "application/json", consumes = "application/json")
+// @ResponseBody
+// public String createEmployee(@RequestBody EmployeeEntity employee, HttpServletRequest request) {  
+//     try {
+//       HttpSession session = request.getSession(false); 
+//       String dlUserId = null; 
+//       if(session != null){
+//         dlUserId = (String) session.getAttribute("eId");
+//         employee.setId(dlUserId);
+//         return adminService.createEmployee(employee);
+//       }
 
 
-    }
-    catch(Exception exception){
-      exception.printStackTrace();
+//     }
+//     catch(Exception exception){
+//       exception.printStackTrace();
 
-    }
+//     }
 
-    return null; 
-}
+//     return null; 
+// }
 
 //this one needs to update timeOffReuqestEntity and create ApprovedTimeOffEntity
 @PutMapping(value="/updateTimeRequest", produces = "application/json")

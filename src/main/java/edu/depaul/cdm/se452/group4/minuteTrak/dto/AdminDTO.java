@@ -13,23 +13,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class AdminDTO {
 
-  private String email;
+  private long adminId;
 
-  private long id;
+  private String email;
 
   private String password;
 
-  private String firstName;
-
-  private String lastName;
-
-  private String phone;
+  private String account; 
   
-  @JsonFormat(pattern = "yyyy-MM-dd")
-  private String dob;
-
-  private String address;
-
   private String token;
 
 }
