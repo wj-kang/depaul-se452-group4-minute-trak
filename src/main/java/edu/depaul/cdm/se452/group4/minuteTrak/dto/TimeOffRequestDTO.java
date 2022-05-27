@@ -1,7 +1,7 @@
+
 package edu.depaul.cdm.se452.group4.minuteTrak.dto;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
@@ -18,14 +18,17 @@ public class TimeOffRequestDTO {
     private long reqId;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
-
-    private LocalDateTime fromDate;
+    private LocalDate startDate;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
-    private LocalDateTime toDate;
+    private LocalDate endDate;
 
+    private String reason;
+    
     private boolean isPaid;
 
     private boolean isApproved;
+
+    private boolean isRejected;
 
 }

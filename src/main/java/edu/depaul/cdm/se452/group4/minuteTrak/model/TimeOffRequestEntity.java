@@ -1,6 +1,6 @@
 package edu.depaul.cdm.se452.group4.minuteTrak.model;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
 import org.springframework.format.annotation.DateTimeFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -31,19 +32,25 @@ public class TimeOffRequestEntity {
   @Column(name = "req_id")
   private long reqId;
 
-  @Column(name = "from_date", nullable = false)
+  @Column(name = "start_date", nullable = false)
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-  private LocalDateTime fromDate;
+  private LocalDate startDate;
 
-  @Column(name = "to_date", nullable = false)
+  @Column(name = "end_date", nullable = false)
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-  private LocalDateTime toDate;
+  private LocalDate endDate;
+
+  @Column(nullable = false)
+  private String reason;
 
   @Column(name = "is_paid", nullable = false)
   private boolean isPaid;
 
   @Column(name = "is_approved")
   private boolean isApproved;
+
+  @Column(name = "is_rejected")
+  private boolean isRejected;
 
   /* Employee(1) -> TimeOffRequests(*) */
   @ManyToOne
