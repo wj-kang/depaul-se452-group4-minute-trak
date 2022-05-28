@@ -1,7 +1,6 @@
 package edu.depaul.cdm.se452.group4.minuteTrak.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +15,7 @@ public class TimeOffRequestService {
 
     @Autowired
     private TimeOffRequestRepository timeOffRequestRepository;
+    @Autowired
     private EmployeeRepository employeeRepository;
 
     public TimeOffRequestEntity create(long eId, TimeOffRequestEntity timeOffRequestEntity) {
