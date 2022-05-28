@@ -30,11 +30,6 @@ public class TimeOffRequestController {
 
     @Autowired
     private TimeOffRequestService timeOffRequestService;
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
-    public TimeOffRequestController(TimeOffRequestService timeOffRequestService) {
-        this.timeOffRequestService = timeOffRequestService;
-    }
 
     @PostMapping("/new")
     public ResponseEntity<?> newTimeOffRequest(@AuthenticationPrincipal AuthStatus authStatus,
@@ -44,15 +39,15 @@ public class TimeOffRequestController {
           ResponseDTO.<String>builder().error("Auth status invalid").build();
       return ResponseEntity.badRequest().body(responseDTO);
     }
-    long reqId = authStatus.getId();
+    long eId = authStatus.getId();
 
     TimeOffRequestEntity timeOffRequestEntity = TimeOffRequestEntity.builder()//
         .fromDate(reqBody.getFromDate())//
         .toDate(reqBody.getToDate())//
         .build();
 
-    TimeOffRequestEntity createdTimeOffRequestEntity = timeOffRequestService.create(reqId, timeOffRequestEntity);
-    log.info("New timesheet created. reqId: {}", timeOffRequestEntity.getReqId());
+    TimeOffRequestEntity createdTimeOffRequestEntity = timeOffRequestService.create(eId, timeOffRequestEntity);
+    log.info("New time off request created. reqId: {}", timeOffRequestEntity.getReqId());
 
     TimeOffRequestDTO responseDTO = TimeOffRequestDTO.builder()//
         .reqId(createdTimeOffRequestEntity.getReqId())//
@@ -63,7 +58,7 @@ public class TimeOffRequestController {
     return ResponseEntity.status(201).body(responseDTO);
   }
 
-  @GetMapping("list")
+  @GetMapping("/list")
   public ResponseEntity<?> getTimesheetList(@AuthenticationPrincipal AuthStatus authStatus) {
     if (!authStatus.getRole().equals("employee")) {
       ResponseDTO<String> responseDTO =
@@ -76,16 +71,16 @@ public class TimeOffRequestController {
     List<TimeOffRequestDTO> timeOffRequestDTOList = new ArrayList<>();
 
     for (TimeOffRequestEntity entity : entities) {
-      timeOffRequestDTOList.add(TimeOffRequestDTO.builder()//
-          .reqId(entity.getReqId())//
-          .fromDate(entity.getFromDate())//
-          .toDate(entity.getToDate())//
-          .isPaid(entity.isPaid())//
-          .isApproved(entity.isApproved())//
-          .isRejected(entity.isRejected())//
+      timeOffRequestDTOList.add(TimeOffRequestDTO.builder()
+          .reqId(entity.getReqId())
+          .fromDate(entity.getFromDate())
+          .toDate(entity.getToDate())
+          .isPaid(entity.isPaid())
+          .isApproved(entity.isApproved())
+          .isRejected(entity.isRejected())
           .build());
     }
-    log.info("TimeOffRequest list data for reqId: {} => {}", eId, timeOffRequestDTOList.toString());
+    log.info("TimeOffRequest list data for eId: {} => {}", eId, timeOffRequestDTOList.toString());
 
     return ResponseEntity.ok().body(timeOffRequestDTOList);
   }
@@ -101,16 +96,16 @@ public class TimeOffRequestController {
     long eId = authStatus.getId();
 
     TimeOffRequestEntity entity = timeOffRequestService.getTimesheetEntityByEIdAndReqId(eId, reqId);
-    TimeOffRequestDTO responseDTO = TimeOffRequestDTO.builder()//
-        .reqId(entity.getReqId())//
-        .fromDate(entity.getFromDate())//
-        .toDate(entity.getToDate())//
-        .isPaid(entity.isPaid())//
-        .isApproved(entity.isApproved())//
-        .isRejected(entity.isRejected())//
+    TimeOffRequestDTO responseDTO = TimeOffRequestDTO.builder()
+        .reqId(entity.getReqId())
+        .fromDate(entity.getFromDate())
+        .toDate(entity.getToDate())
+        .isPaid(entity.isPaid())
+        .isApproved(entity.isApproved())
+        .isRejected(entity.isRejected())
         .build();
 
-    log.info("Timesheet detail data for reqId: {} => {}", reqId, responseDTO.toString());
+    log.info("Time off request detail data for reqId: {} => {}", reqId, responseDTO.toString());
 
     return ResponseEntity.ok().body(responseDTO);
   }
