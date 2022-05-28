@@ -1,7 +1,6 @@
 package edu.depaul.cdm.se452.group4.minuteTrak.model;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -48,7 +47,7 @@ public class TimeOffRequestEntity {
 
   @Column(name = "is_rejected")
   private boolean isRejected;
-  
+
   /* Employee(1) -> TimeOffRequests(*) */
   @ManyToOne
   @JoinColumn(name = "e_id")
