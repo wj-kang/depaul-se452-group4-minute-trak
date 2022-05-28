@@ -17,10 +17,10 @@ public class TimeOffRequestDTO {
     private long reqId;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
-    private LocalDate startDate;
+    private LocalDate fromDate;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
-    private LocalDate endDate;
+    private LocalDate toDate;
 
     private boolean isPaid;
 
