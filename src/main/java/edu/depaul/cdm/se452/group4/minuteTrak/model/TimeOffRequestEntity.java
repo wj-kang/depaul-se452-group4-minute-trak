@@ -1,5 +1,6 @@
 package edu.depaul.cdm.se452.group4.minuteTrak.model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.Column;
@@ -33,11 +34,11 @@ public class TimeOffRequestEntity {
 
   @Column(name = "from_date", nullable = false)
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-  private LocalDateTime fromDate;
+  private LocalDate fromDate;
 
   @Column(name = "to_date", nullable = false)
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-  private LocalDateTime toDate;
+  private LocalDate toDate;
 
   @Column(name = "is_paid", nullable = false)
   private boolean isPaid;
@@ -45,6 +46,9 @@ public class TimeOffRequestEntity {
   @Column(name = "is_approved")
   private boolean isApproved;
 
+  @Column(name = "is_rejected")
+  private boolean isRejected;
+  
   /* Employee(1) -> TimeOffRequests(*) */
   @ManyToOne
   @JoinColumn(name = "e_id")
