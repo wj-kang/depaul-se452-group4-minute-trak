@@ -39,6 +39,8 @@ public class TimeOffRequestEntity {
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
   private LocalDate toDate;
 
+  private String reason;
+
   @Column(name = "is_paid", nullable = false)
   private boolean isPaid;
 
