@@ -91,7 +91,7 @@ public class TimesheetController {
   }
 
   @GetMapping("/{tId}")
-  public ResponseEntity<?> getTimesheetList(@AuthenticationPrincipal AuthStatus authStatus,
+  public ResponseEntity<?> getTimesheetDetailByTId(@AuthenticationPrincipal AuthStatus authStatus,
       @PathVariable long tId) {
     if (!authStatus.getRole().equals("employee")) {
       ResponseDTO<String> responseDTO =
@@ -127,7 +127,7 @@ public class TimesheetController {
   }
 
   @PostMapping("/submit")
-  public ResponseEntity<?> getTimesheetList(@AuthenticationPrincipal AuthStatus authStatus,
+  public ResponseEntity<?> submitTimesheet(@AuthenticationPrincipal AuthStatus authStatus,
       @RequestBody TimesheetDTO reqBody) {
     if (!authStatus.getRole().equals("employee")) {
       ResponseDTO<String> responseDTO =
