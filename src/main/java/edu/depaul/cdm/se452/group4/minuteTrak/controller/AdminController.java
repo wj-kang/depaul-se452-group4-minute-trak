@@ -1,6 +1,7 @@
 package edu.depaul.cdm.se452.group4.minuteTrak.controller;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import antlr.collections.List;
 import edu.depaul.cdm.se452.group4.minuteTrak.dto.ResponseDTO;
 import edu.depaul.cdm.se452.group4.minuteTrak.dto.AdminDTO;
 import edu.depaul.cdm.se452.group4.minuteTrak.dto.EmployeeDTO;
