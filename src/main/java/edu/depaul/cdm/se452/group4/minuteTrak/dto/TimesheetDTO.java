@@ -31,7 +31,7 @@ public class TimesheetDTO {
 
     private boolean isRejected;
 
-    private EmployeeEntity employee;
+    private EmployeeDTO employee; 
 
     private List<WorksDTO> works;
 
