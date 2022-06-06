@@ -1,108 +1,200 @@
-// package edu.depaul.cdm.se452.group4.minuteTrak.controller;
+package edu.depaul.cdm.se452.group4.minuteTrak.controller;
 
-// import java.util.ArrayList;
+import java.time.LocalDate;
+import java.util.ArrayList;
 
-// import javax.servlet.http.HttpServlet;
-// import javax.servlet.http.HttpServletRequest;
-// import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.List;
 
-// import org.springframework.beans.factory.annotation.Autowired;
-// import org.springframework.http.ResponseEntity;
-// import org.springframework.stereotype.Controller;
-// import org.springframework.web.bind.annotation.GetMapping;
-// import org.springframework.web.bind.annotation.PostMapping;
-// import org.springframework.web.bind.annotation.RequestBody;
-// import org.springframework.web.bind.annotation.RequestMapping;
-// import org.springframework.web.bind.annotation.RequestParam;
-// import org.springframework.web.bind.annotation.ResponseBody;
-// import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-// import antlr.collections.List;
-// import edu.depaul.cdm.se452.group4.minuteTrak.dto.ResponseDTO;
-// import edu.depaul.cdm.se452.group4.minuteTrak.dto.AdminDTO;
-// import edu.depaul.cdm.se452.group4.minuteTrak.dto.EmployeeDTO;
-// import edu.depaul.cdm.se452.group4.minuteTrak.model.AdminEntity;
-// import edu.depaul.cdm.se452.group4.minuteTrak.model.EmployeeEntity;
-// import edu.depaul.cdm.se452.group4.minuteTrak.model.TimeOffRequestEntity;
-// import edu.depaul.cdm.se452.group4.minuteTrak.model.TimesheetEntity;
-// import edu.depaul.cdm.se452.group4.minuteTrak.service.AdminService;
-// import lombok.extern.slf4j.Slf4j;
-// import org.springframework.web.bind.annotation.PutMapping;
-// import org.springframework.web.bind.annotation.PathVariable;
-
-
-// @Slf4j
-// @Controller
-// @RequestMapping("/admin")
-// public class AdminController {
-
-// @Autowired
-// private AdminService adminService;
-
-// // - getAllTimeOffRequests (needing approval)
-// // - getAllTimeSheets (needing approval)
-// // - GetAllEmployees
-// // - GetEmployeesData - (Params: employee ID)
-
-// // - updateTimeOffRequest
-// // - x
-// // - updateEmployeeInfo
-
-// // - createEmployee
-
-// // -deleteEmployee
+import edu.depaul.cdm.se452.group4.minuteTrak.dto.ResponseDTO;
+import edu.depaul.cdm.se452.group4.minuteTrak.dto.TimeOffRequestDTO;
+import edu.depaul.cdm.se452.group4.minuteTrak.dto.TimesheetDTO;
+import edu.depaul.cdm.se452.group4.minuteTrak.dto.AdminDTO;
+import edu.depaul.cdm.se452.group4.minuteTrak.dto.EmployeeDTO;
+import edu.depaul.cdm.se452.group4.minuteTrak.model.AdminEntity;
+import edu.depaul.cdm.se452.group4.minuteTrak.model.ApprovedTimeOffEntity;
+import edu.depaul.cdm.se452.group4.minuteTrak.model.EmployeeEntity;
+import edu.depaul.cdm.se452.group4.minuteTrak.model.TimeOffRequestEntity;
+import edu.depaul.cdm.se452.group4.minuteTrak.model.TimesheetEntity;
+import edu.depaul.cdm.se452.group4.minuteTrak.security.TokenProvider;
+import edu.depaul.cdm.se452.group4.minuteTrak.service.AdminService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 
-// @GetMapping(value = "/getAllTimeOffRequests", produces = "application/json")
-// @ResponseBody
-// public List<TimeOffRequestEntity> getAllTimeOffRequests(){
-// List<TimeOffRequestEntity> requests = new ArrayList<>();
 
-// try{
-// requests = adminService.getAllTimeOffRequests();
+@Slf4j
+@Controller
+@RequestMapping("/admin")
+public class AdminController {
 
-// }
-// catch(Exception ex){
-// ex.printStackTrace();
+  private AdminService adminService;
 
-// }
+  private TokenProvider tokenProvider;
+  
+  // private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-// return requests;
-// }
+  @Autowired
+  public AdminController(AdminService adminService, TokenProvider tokenProvider){
+    this.adminService = adminService; 
+    this.tokenProvider = tokenProvider; 
+  }
+
+  @PostMapping("/login")
+  public ResponseEntity<?> authenticate(@RequestBody AdminDTO adminDTO) {
+
+    System.out.println(adminDTO.getEmail());
+    System.out.println(adminDTO.getPassword());
+    AdminEntity admin = adminService.getByCredentials(adminDTO.getEmail(), 
+    adminDTO.getPassword());
+    
+    if(admin == null) {
+      System.out.print("INSIDE admin = null in /login");
+      ResponseDTO<String> responseDTO = ResponseDTO.<String>builder().error("Login Failed").build();
+      return ResponseEntity.badRequest().body(responseDTO);
+    }
 
 
-// @GetMapping(value = "/getAllTimeSheets", produces = "application/json")
-// @ResponseBody
-// public List<TimeSheetEntity> getAllTimeSheets(){
-// List<TimeSheetEntity> sheets = new ArrayList<>();
+      /* Create a JWT token including id & role */
+      String token = tokenProvider.createAdminToken(admin);
+      System.out.print("INSIDE post token in /login");
 
-// try{
-// sheets = adminService.getAllTimeSheets();
+      AdminDTO responseAdminDTO = AdminDTO.builder().account(admin.getAccount())
+          .adminId(admin.getAdminId()).token(token).build();
+          System.out.print("built admin dto in /login");
 
-// }
-// catch(Exception ex){
-// ex.printStackTrace();
+      return ResponseEntity.ok().body(responseAdminDTO);
 
-// }
+}
 
-// return sheets;
-// }
+@GetMapping(value = "/getAllTimeOffRequests", produces = "application/json")
+@ResponseBody
+public ResponseEntity<?> getAllTimeOffRequests(){
+      List<TimeOffRequestEntity> entities = adminService.getAllTimeOffRequests();
+    
+      List<TimeOffRequestDTO> timeOffRequestDTOList = new ArrayList<>(); 
 
-// @GetMapping(value = "/getAllEmployees", produces = "application/json")
-// @ResponseBody
-// public List<EmployeeEntity> getAllEmployess(){
-// List<EmployeeEntity> empList = new ArrayList<>();
 
-// try{
-// empList = adminService.getAllEmployees();
-// }
-// catch(Exception ex){
-// ex.printStackTrace();
+      try{
+        for(TimeOffRequestEntity entity: entities){
+          timeOffRequestDTOList.add(TimeOffRequestDTO.builder()
+          .reqId(entity.getReqId())
+          .fromDate(entity.getFromDate())
+          .toDate(entity.getToDate())
+          .isPaid(entity.isPaid())
+          .isApproved(entity.isApproved())
+          .isRejected(entity.isRejected())
+          .employee(EmployeeDTO.builder()
+          .firstName(entity.getEmployee().getFirstName())
+          .lastName(entity.getEmployee().getLastName())
+          .build())
+          .build());
 
-// }
 
-// return empList;
-// }
+
+        }
+
+        return ResponseEntity.ok().body(timeOffRequestDTOList); 
+      
+
+      }
+      catch(Exception ex){
+        ex.printStackTrace();
+
+      }
+
+    return null; 
+}
+
+
+@GetMapping(value = "/getAllTimeSheets", produces = "application/json")
+@ResponseBody
+public ResponseEntity<?> getAllTimeSheets(){
+      List<TimesheetEntity> entities = adminService.getAllTimeSheets(); 
+      List<TimesheetDTO> timesheetDTOList = new ArrayList<>(); 
+
+      try{
+        for(TimesheetEntity entity : entities){
+        timesheetDTOList.add(TimesheetDTO.builder()
+          .tId(entity.getTId())
+          .startDate(entity.getStartDate())
+          .endDate(entity.getEndDate())
+          .isSubmitted(entity.isSubmitted())
+          .isApproved(entity.isApproved())
+          .isRejected(entity.isRejected())
+          .employee(EmployeeDTO.builder()
+          .firstName(entity.getEmployee().getFirstName())
+          .lastName(entity.getEmployee().getLastName())
+          .build())
+          .build());
+        }
+        
+        return ResponseEntity.ok().body(timesheetDTOList); 
+
+
+      }
+      catch(Exception ex){
+        System.out.println("INSIDE CATCH OF GETALLTIMESHEETS");
+        ex.printStackTrace();
+
+      }
+
+      return null; 
+
+}
+
+@GetMapping(value = "/getAllEmployees", produces = "application/json")
+@ResponseBody
+public ResponseEntity<?> getAllEmployees(){
+      List<EmployeeEntity> entities = adminService.getAllEmployees();
+      List<EmployeeDTO> employeeDTOList = new ArrayList<>(); 
+
+      try{
+          for(EmployeeEntity entity : entities) {
+            employeeDTOList.add(EmployeeDTO.builder()
+              .id(entity.getEId())
+              .email(entity.getEmail())
+              .firstName(entity.getFirstName())
+              .lastName(entity.getLastName())
+              .password(entity.getPassword())
+              .address(entity.getAddress())
+              .phone(entity.getPhone())
+              .dob(entity.getDob())
+              .createdTime(entity.getCreatedTime())
+              .isApproved(entity.isApproved())
+              .isRejected(entity.isRejected())
+              .ptoBank(entity.getPtoBank())
+              .build()
+              );
+      }
+
+        return ResponseEntity.ok().body(employeeDTOList); 
+    }
+
+      catch(Exception ex){
+        System.out.println("INSIDE GET ALL EMPLOYEES CATCH");
+        ex.printStackTrace();
+
+      }
+
+    return null; 
+}
 
 // @GetMapping(value = "/getEmployeeData", produces = "application/json")
 // @ResponseBody
