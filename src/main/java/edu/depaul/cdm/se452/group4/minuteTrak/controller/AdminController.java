@@ -271,7 +271,7 @@ public ResponseEntity<?> updateTimeRequest(@RequestBody TimeOffRequestDTO reqBod
 
     adminService.updateTimeRequest(timeOffRequestEntity); 
 
-    return ResponseEntity.ok().body(timeOffRequestEntity);
+    return ResponseEntity.ok().body("Successfully submitted");
   }
   catch(Exception exception){
     exception.printStackTrace();
@@ -284,13 +284,13 @@ public ResponseEntity<?> updateTimeRequest(@RequestBody TimeOffRequestDTO reqBod
 
 
 
-@PutMapping(value="/updateTimesheet", produces = "application/json")
+@PostMapping(value="/updateTimesheet", produces = "application/json")
 @ResponseBody
 public ResponseEntity<?> updateTimeSheet(@RequestBody TimesheetDTO reqBody){
   
   long tId = reqBody.getTId(); 
   TimesheetEntity timesheetEntity = adminService.getTimeSheetByTId(tId); 
-
+  System.out.println("GOT TIMESHEETENTITY, We still good");
   if(timesheetEntity == null){
     ResponseDTO<String> responseDTO =
           ResponseDTO.<String>builder().error("No record with the given eId & tId").build();
@@ -305,7 +305,7 @@ public ResponseEntity<?> updateTimeSheet(@RequestBody TimesheetDTO reqBody){
    }
 
    adminService.updateTimeSheet(timesheetEntity); 
-   return ResponseEntity.ok().body(timesheetEntity);                   
+   return ResponseEntity.ok().body("SUCCESSFULLY SUBMITTED");                   
     }
 
   catch(Exception exception){
@@ -336,7 +336,7 @@ public ResponseEntity<?> updateEmployeeInfo(@RequestBody EmployeeDTO reqBody){
     else
       employeeEntity.setRejected(true);
     adminService.updateEmployeeInfo(employeeEntity);
-    return ResponseEntity.ok().body(employeeEntity);
+    return ResponseEntity.ok().body("SUCESSFULLY SUBMITTED");
 
   }
   catch(Exception exception){
