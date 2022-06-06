@@ -47,7 +47,7 @@ public class AdminController {
 
   private TokenProvider tokenProvider;
   
-  private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+  // private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
   @Autowired
   public AdminController(AdminService adminService, TokenProvider tokenProvider){
@@ -61,7 +61,7 @@ public class AdminController {
     System.out.println(adminDTO.getEmail());
     System.out.println(adminDTO.getPassword());
     AdminEntity admin = adminService.getByCredentials(adminDTO.getEmail(), 
-    adminDTO.getPassword(), passwordEncoder);
+    adminDTO.getPassword());
     
     if(admin == null) {
       System.out.print("INSIDE admin = null in /login");
@@ -271,7 +271,7 @@ public ResponseEntity<?> updateTimeRequest(@RequestBody TimeOffRequestDTO reqBod
 
     adminService.updateTimeRequest(timeOffRequestEntity); 
 
-    return ResponseEntity.ok().body(timeOffRequestEntity);
+    return ResponseEntity.ok().body("Success");
   }
   catch(Exception exception){
     exception.printStackTrace();
@@ -305,7 +305,7 @@ public ResponseEntity<?> updateTimeSheet(@RequestBody TimesheetDTO reqBody){
    }
 
    adminService.updateTimeSheet(timesheetEntity); 
-   return ResponseEntity.ok().body(timesheetEntity);                   
+   return ResponseEntity.ok().body("Success");                   
     }
 
   catch(Exception exception){
@@ -336,7 +336,7 @@ public ResponseEntity<?> updateEmployeeInfo(@RequestBody EmployeeDTO reqBody){
     else
       employeeEntity.setRejected(true);
     adminService.updateEmployeeInfo(employeeEntity);
-    return ResponseEntity.ok().body(employeeEntity);
+    return ResponseEntity.ok().body("Success");
 
   }
   catch(Exception exception){

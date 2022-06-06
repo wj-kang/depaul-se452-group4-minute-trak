@@ -47,10 +47,10 @@ public class AdminService {
   }
 
 
-  public AdminEntity getByCredentials(String email, String password, PasswordEncoder encoder) {
+  public AdminEntity getByCredentials(String email, String password) {
     AdminEntity originalUser = adminRepository.findByEmail(email); 
 
-    if(originalUser != null && encoder.matches(password,  originalUser.getPassword())){
+    if(originalUser != null && originalUser.getPassword().equals(password)){
       System.out.println("inside first if statement");
       return originalUser; 
     }

@@ -28,7 +28,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     // Set permissions on endpoints
     http.authorizeRequests()
         // Endpoints without auth
-        .antMatchers("/auth/**", "/test/**").permitAll() //
+        .antMatchers("/auth/**", "/test/**", "/admin/login").permitAll() //
         // Endpoints with auth
         .anyRequest().authenticated();
 
