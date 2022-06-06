@@ -31,6 +31,9 @@ public class AdminEntity {
   private long adminId;
 
   @Column(nullable = false)
+  private String email;
+
+  @Column(nullable = false)
   private String account;
 
   @Column(nullable = false)

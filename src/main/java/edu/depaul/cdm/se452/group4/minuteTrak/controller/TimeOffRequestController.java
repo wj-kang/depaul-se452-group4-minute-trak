@@ -132,15 +132,18 @@ public class TimeOffRequestController {
 // // public List<TimeOffRequestEntity> getTimeOffRequestList()) {
 // public ResponseEntity<?> findAll(@AuthenticationPrincipal AuthStatus authStatus) {
 
-// final String authRole = authStatus.getRole();
+        // final String authRole = authStatus.getRole();
+        // List<TimeOffRequestEntity> timeOffRequestEntities;
 
-// switch (authRole) {
-// case "admin":
-// return ResponseEntity.ok().build();
 
-// case "employee":
-// List<TimeOffRequestEntity> timeOffRequestEntities = timeOffRequestService.findAll();
-// return ResponseEntity.ok().body(timeOffRequestEntities);
+        // switch (authRole) {
+        //     case "admin":
+        //         timeOffRequestEntities = timeOffRequestService.findAll();
+        //         return ResponseEntity.ok().body(timeOffRequestEntities);
+
+        //     case "employee":
+        //        timeOffRequestEntities = timeOffRequestService.findAll();
+        //         return ResponseEntity.ok().body(timeOffRequestEntities);
 
 // default:
 // return ResponseEntity.badRequest().body("err");

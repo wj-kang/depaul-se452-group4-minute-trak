@@ -11,5 +11,11 @@ import edu.depaul.cdm.se452.group4.minuteTrak.model.TimeOffRequestEntity;
 @Repository
 public interface TimeOffRequestRepository extends JpaRepository<TimeOffRequestEntity, Long> {
 
+    public TimeOffRequestEntity save(TimeOffRequestEntity timeOffRequestEntity); 
+
+    public List<TimeOffRequestEntity> findAll();
+
     public List<TimeOffRequestEntity> findAllByEmployee(EmployeeEntity employee);
+
+    public TimeOffRequestEntity getById(long tId); 
 }
