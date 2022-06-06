@@ -8,6 +8,7 @@ group = 'edu.depaul.cdm.se452.group4'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
 
+
 configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
@@ -26,17 +27,24 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 
 	// https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt
-  // implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
+  implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
 
   developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	
 	compileOnly 'org.projectlombok:lombok'
-	runtimeOnly 'org.postgresql:postgresql'
 	annotationProcessor 'org.projectlombok:lombok'
+	runtimeOnly 'org.postgresql:postgresql'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+tasks.named('jar') {
+	enabled = false
+	manifest {
+      attributes["Main-Class"] = "edu.depaul.cdm.se452.group4.minuteTrak.MinuteTrakApplication"
+  }
 }

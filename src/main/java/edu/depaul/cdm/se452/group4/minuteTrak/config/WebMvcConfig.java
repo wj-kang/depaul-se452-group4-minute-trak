@@ -15,7 +15,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
   public void addCorsMappings(CorsRegistry registry) {
     // For all routes
     registry.addMapping("/**")//
-        .allowedOrigins("http://localhost:3000")//
+        .allowedOrigins("http://localhost:3000",
+            "http://depaul-se452-group4-minutetrak.s3-website-us-east-1.amazonaws.com")//
         .allowedHeaders("*")//
         .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")//
         .allowCredentials(true)//
