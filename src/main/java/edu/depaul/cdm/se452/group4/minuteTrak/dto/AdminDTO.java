@@ -13,7 +13,12 @@ public class AdminDTO {
   
     private long adminId;
 
+    private String email;
+
     private String password;
   
     private String account;
+
+    private String token;
+
 }

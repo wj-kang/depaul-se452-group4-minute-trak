@@ -11,4 +11,9 @@ public interface TimesheetRepository extends JpaRepository<TimesheetEntity, Long
 
   public List<TimesheetEntity> findAllByEmployee(EmployeeEntity employee);
 
+  public TimesheetEntity save(TimesheetEntity timesheetEntity); 
+
+  public List<TimesheetEntity> findAll();
+
+
 }
